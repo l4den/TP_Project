@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Cards Business -->
+<div class="container">
+    <br>
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for shop in shops %}
+            <div class="col">
+              <div class="card">
+                <img src="{{ shop.logo.url }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h3 class="card-title">{{ shop.name }}</h3>
+                    <small>{{ shop.description }}</small>
+                    <br>
+                    <hr>
+                  <a class="btn btn-primary" href="{% url 'shop_details_page' shop.id %}" role="button">Check Offers</a>
+                </div>
+              </div>
+            </div>
+      {% endfor %}
+  </div>
+<hr>
+</div>
+{% endblock content %}

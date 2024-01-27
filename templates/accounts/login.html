@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- Login Form Section -->
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Log in</h2>
+            {% include 'includes/alerts.html' %}
+            <form method="POST" action="{% url 'login_page' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="loginEmail">Email address</label>
+                    <input type="email" class="form-control" id="loginEmail" name="email" placeholder="Enter your email">
+                </div>
+              <br>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Enter your password">
+                </div>
+              <br>
+                {% if request.GET.next %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                {% endif %}
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+            <br>
+            <p style="text-align: center">Don't have an account? <a href="{% url 'register_page' %}">Register</a></p>
+          <hr>
+        </div>
+    </div>
+</section>
+{% endblock content %}

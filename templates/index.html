@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- Navbar -->
+
+{% block content %}
+<!-- Hero Section -->
+<br>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="display-4">Welcome to Reservify</h1>
+        <br>
+        <p class="lead">Streamline your reservation process with Reservify. Whether it's for a haircut, plumbing, or any other service, we've got you covered.</p>
+        <img src="{% static 'reservify-logo-zip-file/png/logo-no-background.png' %}" class="img-fluid">
+        <br>
+        <a class="btn btn-primary btn-lg" href="{% url 'shops_page' %}" role="button">Get Started</a>
+        <hr>
+        <br>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <h2>Easy Reservations</h2>
+            <p>Make reservations with just a few clicks. Our user-friendly interface ensures a seamless experience for both you and your customers.</p>
+            <img src="{% static 'reserveImage.jpg' %}" class="img-fluid img-thumbnail">
+        </div>
+        <div class="col-lg-4">
+            <h2>Flexible Options</h2>
+            <p>Customize reservation settings to fit your business needs. Set availability, manage bookings, and stay in control.</p>
+            <br>
+            <img src="{% static 'plumberImg.jpg' %}" class="img-fluid img-thumbnail">
+        </div>
+        <div class="col-lg-4">
+            <h2>24/7 Support</h2>
+            <p>Our support team is ready to assist you around the clock. Have a question or need help? We're here for you.</p>
+            <br>
+            <img src="{% static 'supportGirl.jpg' %}" class="img-fluid img-thumbnail">
+        </div>
+    </div>
+    <hr>
+</section>
+
+<!-- Footer -->
+
+{% endblock content %}

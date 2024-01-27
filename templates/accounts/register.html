@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <section class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Create an account</h2>
+                   {% for field in form %}
+                        {% if field.errors %}
+                            <div class="alert alert-danger">
+                                {{ field.label }}: {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                      <form method="POST" action="{% url 'register_page' %}">
+                          {% csrf_token %}
+                            <div class="form-group">
+                                <label for="signupUsername">Username</label>
+                                {{ form.username }}
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupEmail">Email address</label>
+                                {{ form.email }}
+                                <br>
+                            </div>
+                          <div class="form-group">
+                                <label for="signupNumber">Phone number</label>
+                                {{ form.phone_number }}
+                                <br>
+                            </div>
+                          <div class="form-group">
+                                <label for="signupName">First name</label>
+                                {{ form.first_name }}
+                                <br>
+                            </div>
+                          <div class="form-group">
+                                <label for="signupSurname">Last name</label>
+                                {{ form.last_name }}
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="signupPassword">Password</label>
+                                {{ form.password }}
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirm Password</label>
+                                {{ form.confirm_password }}
+                                <br>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Account</button>
+                        </form>
+                    <br>
+                <p style="text-align: center">Already have an account? <a href="{% url 'login_page' %}">Log in</a></p>
+                <hr>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

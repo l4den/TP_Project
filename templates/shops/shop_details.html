@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+        <!-- Shop Header -->
+        <!-- Shop Photo -->
+        <br>
+        <img src="{{ shop.logo.url }}" alt="Hairstyle Shop" class="img-fluid shop-photo">
+        <div class="shop-header">
+            <h1>{{ shop.name }}</h1>
+        </div>
+         <!-- Description -->
+            <p>
+                {{ shop.description }}
+            </p>
+        <!-- Address -->
+            <p>
+                <small>Address: </small>{{ shop.location }}
+            </p>
+            <p>
+                📌<a href="{{ shop.location_link }}">{{ shop.location_link }}</a>
+            </p>
+        <hr>
+        <!-- Services with Prices -->
+        <div class="services">
+            <h2 style="text-align: center;">Services & Prices</h2>
+            {% if services %}
+                <table class="table">
+                <tr>
+                    <th>Service</th>
+                    <th>Time to complete</th>
+                    <th>Price</th>
+                </tr>
+                {% for serv in services %}
+                    <tr>
+                        <td>{{ serv.service }}</td>
+                        <td>{{ serv.time_to_complete|time:"H:i" }}</td>
+                        <td>{{ serv.price }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+                <h4>Nothing to show right now</h4>
+            {% endif %}
+        </div>
+        <br>
+        <hr>
+        <!-- Working Hours -->
+        <div class="working-hours">
+            <h2 style="text-align: center;">Working Hours</h2>
+            {% if times %}
+                <table class="table">
+                <tr>
+                    <th>Day</th>
+                    <th>Opening Time</th>
+                    <th>Closing Time</th>
+                </tr>
+                {% for day in times %}
+                    {% if day.opens != day.closes %}
+                        <tr>
+                            <td>{{ day.get_day_display }}</td>
+                            <td>{{ day.opens|date:"H:i"  }}</td>
+                            <td>{{ day.closes|date:"H:i"  }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>{{ day.get_day_display }}</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                <!-- Add more days and times as needed -->
+            </table>
+            {% else %}
+                <h4>Nothing to show right now</h4>
+            {% endif %}
+        </div>
+        <br>
+        {% if services %}
+            <div class="text-center py-4">
+                <a href="{% url 'book_appointment_page' shop.id %}" class="btn btn-primary">Book now</a>
+            </div>
+        {% endif %}
+    <hr>
+    </div>
+{% endblock content %}

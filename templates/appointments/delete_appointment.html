@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+    <div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="border: 1px solid darkgray; padding: 3%;">
+                    <h3>Cancel Appointment</h3>
+                    <p>
+                        <small>Are you sure you want to cancel your appointment with </small>
+                        {{ appointment.shop.name }}
+                        <small> on </small>
+                        {{ appointment.date|date:"d/m/Y" }}
+                        <small> at </small>
+                        {{ appointment.start_time|date:"H:i" }}
+                        <small> ?</small>
+                    </p>
+                    <a class="btn btn-danger" href="{% url 'delete_appointment' appointment.id %}">Cancel</a>
+                    <a class="btn btn-primary" href="{% url 'myappointments_page' %}">My appointments</a>
+                </div><small></small>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
