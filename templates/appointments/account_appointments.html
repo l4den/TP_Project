@@ -20,6 +20,7 @@
                 <div style="padding: 3%;">
                     <table class="table">
                         <tr>
+                            <th>Code</th>
                             <th>Shop</th>
                             <th>Date</th>
                             <th>Start time</th>
@@ -29,6 +30,7 @@
                         </tr>
                         {% for app in appointments %}
                                 <tr>
+                                    <td>{{ app.code }}</td>
                                     <td>{{ app.shop.name }}</td>
                                     <td>{{ app.date|date:"d/m/Y" }}</td>
                                     <td>{{ app.start_time|date:"H:i" }}</td>

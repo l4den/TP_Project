@@ -1,3 +1,4 @@
+import random
 from django.db import models
 from django.utils import timezone
 from shops.models import Shop
@@ -20,6 +21,7 @@ class Appointment(models.Model):
     end_time = models.TimeField(blank=True, null=True)
     services = models.ManyToManyField(Service)
     total_price = models.PositiveIntegerField(default=1, blank=True, null=True)
+    code = models.CharField(max_length=7, blank=True, null=True)
 
     def calculate_duration(self):
         total_duration = timedelta()
@@ -36,5 +38,18 @@ class Appointment(models.Model):
         total_price = sum(serv.price for serv in self.services.all())
         return total_price
 
+    def generate_code(self):
+        code = 'R-'
+        for i in range(5):
+            code = code + str(random.randint(0, 9))
+
+        return code
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            self.code = self.generate_code()
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return self.shop.name + ' ' + self.user.email + ' ' +  str(self.date)
+        return self.shop.name + ' ' + self.user.email + ' ' + str(self.date)
