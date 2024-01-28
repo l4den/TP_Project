@@ -33,4 +33,5 @@ class Service(models.Model):
         unique_together = ('shop', 'service')
 
     def __str__(self):
-        return f'Shop: {self.shop}\t {self.service}\t {self.price} {self.time_to_complete}'
+        formatted_time = self.time_to_complete.strftime('%H:%M')
+        return f'{self.service}\t {formatted_time} {self.price}'

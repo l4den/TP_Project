@@ -39,6 +39,7 @@ class AppointmentForm(forms.ModelForm):
         self.shop = kwargs.pop('shop', None)
         super(AppointmentForm, self).__init__(*args, **kwargs)
         self.fields['date'].initial = datetime.today().date()
+        self.fields['services'].queryset = self.shop.service_set.all() if self.shop else Appointment.objects.none()
 
     def clean(self):
         cleaned_data = super().clean()
