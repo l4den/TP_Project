@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta, time
+from django.utils import timezone
 
 from django import forms
 from .models import Appointment
@@ -6,7 +7,7 @@ from services.models import Service
 
 
 def validate_future_date(value):
-    if value < date.today():
+    if value < timezone.now().date():
         raise forms.ValidationError('Please select a date in the future.')
 
 
@@ -20,23 +21,26 @@ class AppointmentForm(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple,
         required=True
     )
-
     date = forms.DateField(
         widget=forms.DateInput(
-            attrs={'type': 'date', 'min': str(date.today()), 'max': str(date.today() + timedelta(days=30))}),
-        # Use the DateInput widget
+            attrs={'type': 'date',
+                   'min': str(timezone.now().date()),
+                   'max': str((timezone.now() + timedelta(days=30)).date())}),
         help_text='Select a date',
-        validators=[validate_future_date]
-    )
+        validators=[validate_future_date],
 
+    )
     start_time = forms.TimeField(widget=forms.TimeInput(format='%H:%M'),
                                  initial=datetime.now().time(),
                                  help_text='Format: HH:MM (e.g., 09:15)'
                                  )
 
-    # Shop da se stava kako default
+    # shop da e automaticaly filled in
+    # prvicno selektiraniot datum da e denesniot datum
+    # moze da se izberat samo Services koi pripagjaat na toj shop
     def __init__(self, *args, **kwargs):
         self.shop = kwargs.pop('shop', None)
+        self.user = kwargs.pop('user', None)
         super(AppointmentForm, self).__init__(*args, **kwargs)
         self.fields['date'].initial = datetime.today().date()
         self.fields['services'].queryset = self.shop.service_set.all() if self.shop else Appointment.objects.none()
@@ -55,9 +59,11 @@ class AppointmentForm(forms.ModelForm):
                 self.add_error('date', "The shop doesn't work on the selected date.")
 
             # Ako e Appointment za denes
-            if apt_date == date.today():
+            if apt_date == timezone.now().date():
                 # Dali start_time e vo idnina?
-                if start_time < datetime.now().time():
+                now = datetime.now()
+                now_time = now.time()
+                if start_time < now_time:
                     self.add_error('start_time', "You cannot book an appointment in the past.")
 
             # Dali start_time e vo rabotnoto vreme na toj den?
@@ -73,15 +79,13 @@ class AppointmentForm(forms.ModelForm):
 
             endtime = timedelta(hours=start_time.hour, minutes=start_time.minute) + duration
             end_datetime = datetime.combine(date.today(), time()) + endtime
-
-            # Convert end_datetime to a datetime.time object
             end_time = end_datetime.time()
-
-            print(f'opens={type(opens)}, start_time={type(start_time)}, end_time={type(end_time)}closes={type(closes)}')
-            print(f'{opens}<{start_time}<{closes} = {opens < start_time < closes}')
-
             if not opens < end_time < closes and day_of_week in shop.working_week_days():
                 self.add_error('start_time', "The end of the appointment is past the shop's closing time.")
+
+            # Dali korisnikot ima zakazano drug termin koj sto se poklopuva so ovoj?
+            if not self.user.user_is_free(apt_date, start_time, end_time):
+                self.add_error('date', "You have another appointment booked at this time.")
 
             # Dali ima drugi Appointments na taa data vo toa vreme?
             if not shop.timeslot_is_free(apt_date, start_time, end_time):

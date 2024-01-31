@@ -2,57 +2,61 @@
 {% load static %}
 
 {% block content %}
-    <br>
-    <div>
-        <div class="row">
-            <div class="col-lg-12">
-               <div style="text-align: center;">
-                    <h4>These are your previous appointments</h4>
-               </div>
-            </div>
-        </div>
-        <br>
-        {% if appointments %}
+    <section class="container my-5">
+        <div>
             <div class="row">
                 <div class="col-lg-12">
-                    <div style="padding: 3%;">
-                        <table class="table">
-                            <tr>
-                                <th>Shop</th>
-                                <th>Date</th>
-                                <th>Start time</th>
-                                <th>End time</th>
-                                <th>Price</th>
-                            </tr>
-                            {% for app in appointments %}
-                                    <tr>
-                                        <td>{{ app.shop.name }}</td>
-                                        <td>{{ app.date|date:"d/m/Y" }}</td>
-                                        <td>{{ app.start_time|date:"H:i" }}</td>
-                                        <td>{{ app.end_time|date:"H:i" }}</td>
-                                        <td>{{ app.total_price }} den</td>
-                                    </tr>
-                            {% endfor %}
-                        </table>
+                   <div style="text-align: center;">
+                        <h4>These are your previous appointments</h4>
+                   </div>
+                </div>
+            </div>
+            <br>
+            {% if appointments %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="padding: 3%;">
+                            <table class="table">
+                                <tr>
+                                    <th>Shop</th>
+                                    <th>Date</th>
+                                    <th>Start time</th>
+                                    <th>End time</th>
+                                    <th>Price</th>
+                                </tr>
+                                {% for app in appointments %}
+                                        <tr>
+                                            <td>{{ app.shop.name }}</td>
+                                            <td>{{ app.date|date:"d/m/Y" }}</td>
+                                            <td>{{ app.start_time|date:"H:i" }}</td>
+                                            <td>{{ app.end_time|date:"H:i" }}</td>
+                                            <td>{{ app.total_price }} den</td>
+                                        </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="text-align: center;">
+                            <h4>You have no previous appointments</h4>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row justify-content-center">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div style="text-align: center">
+                            <p>View upcoming appointments? <a href="{% url 'myappointments_page' %}">My Appointments</a></p>
+                        </div>
+                        <br>
+                        <hr>
                     </div>
                 </div>
             </div>
-        {% else %}
-            <div class="row">
-                <div class="col-lg-12">
-                    <div style="text-align: center;">
-                        <h4>You have no previous appointments</h4>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-lg-12">
-                <div style="text-align: center">
-                    <p>View upcoming appointments? <a href="{% url 'myappointments_page' %}">My Appointments</a></p>
-                </div>
-                <hr>
-            </div>
-        </div>
-    </div>
+    </section>
 {% endblock content %}

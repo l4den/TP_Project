@@ -10,7 +10,7 @@
                     {% for field in form %}
                         {% if field.errors %}
                             <div class="alert alert-danger">
-                                {{ field.label }}: {{ field.errors }}
+                                {{ field.errors }}
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -21,11 +21,13 @@
                                 {{ form.services }}
                                 <br>
                             </div>
+                          <br>
                             <div class="form-group">
                                 <label for="date">Date</label>
                                 {{ form.date }}
                                 <br>
                             </div>
+                          <br>
                             <div class="form-group">
                                 <label for="start_time">Starting time</label>
                                 {{ form.start_time }}
@@ -45,7 +47,7 @@
             <div class="col-lg-12">
                 {% if appointments %}
                     <div style="padding: 3%;">
-                        <h4  style="text-align: center;">Booked appointments on [датумот што е селектиран]</h4>
+                        <h4  style="text-align: center;">Booked appointments on <span id="selected-date"></span></h4>
                         <table class="table">
                             <tr>
                                 <th>Date</th>
@@ -53,7 +55,7 @@
                                 <th>End time</th>
                             </tr>
                             {% for app in appointments %}
-                                    <tr>
+                                    <tr  class="appointment-row" data-date="{{ app.date|date:"Y-m-d" }}">
                                         <td>{{ app.date|date:"d/m/Y" }}</td>
                                         <td>{{ app.start_time|date:"H:i" }}</td>
                                         <td>{{ app.end_time|date:"H:i" }}</td>
@@ -63,11 +65,46 @@
                     </div>
                 {% else %}
                     <div style="text-align: center;">
-                        <h4>There are no booked appointments on [датумот што е селектиран]</h4>
+                        <h4>There are no booked appointments on <span id="selected-date"></span></h4>
                     </div>
                 {% endif %}
             </div>
         </div>
     </section>
+    <script>
+    // Function runs on load and when selecting a new date
+    $(document).ready(function() {
+        $('input[name=date]').on('change', function() {
 
+            // Display which date is selected on the page
+            var dateValue = $(this).val();
+            var dateArr = dateValue.split('-');
+            var formattedDate = dateArr[2] + '/' + dateArr[1] + '/' + dateArr[0];
+            $('#selected-date').text(formattedDate);
+
+            // Display all appointments who's date matches the selected date
+            var currentDate = new Date();
+            var appointments = document.querySelectorAll('.appointment-row');
+
+            for (var i = 0; i < appointments.length; i++) {
+                var appointmentDate = appointments[i].getAttribute('data-date');
+                var appointmentEndTimeString = appointmentDate + " " + appointments[i].querySelector('td:nth-child(3)').innerText;
+                var appointmentEndTime = new Date(appointmentEndTimeString);
+
+                // Compare the date values and show/hide the rows accordingly
+               if (appointmentDate === dateValue){
+                   appointments[i].style.display = 'table-row';
+                   if (dateValue === currentDate.toISOString().split('T')[0] && currentDate.getTime() > appointmentEndTime.getTime()){
+                       {#console.log('dateValue= ', dateValue)#}
+                       {#console.log('currentDate= ', currentDate)#}
+                       {#console.log('appointmentEndTime= ', appointmentEndTime)#}
+                       appointments[i].style.display = 'none';
+                   }
+               } else {
+                   appointments[i].style.display = 'none';
+               }
+            }
+         }).trigger('change');
+    });
+    </script>
 {% endblock content %}

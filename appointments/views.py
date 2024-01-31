@@ -2,6 +2,7 @@ import json
 from datetime import timedelta, datetime
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.forms import model_to_dict
 from django.shortcuts import render, get_object_or_404, redirect
 from shops.models import Shop
@@ -14,7 +15,7 @@ def book_appointment_page(request, id):
     shop = get_object_or_404(Shop, id=id)
 
     if request.method == 'POST':
-        form = AppointmentForm(request.POST, shop=shop)
+        form = AppointmentForm(request.POST, shop=shop, user=request.user.get_account())
         if form.is_valid():
             appointment = form.save(commit=False)
             appointment.shop = shop
@@ -33,10 +34,8 @@ def book_appointment_page(request, id):
 
             start_time = form.cleaned_data['start_time']
 
-            print('Error in calculate_duration()')
             end_time = timedelta(hours=start_time.hour, minutes=start_time.minute) + duration
             duration = str(duration)
-            print('No error in calculate_duration')
 
             # session create
             appointment_data = model_to_dict(form.instance)
@@ -54,7 +53,7 @@ def book_appointment_page(request, id):
             return redirect('confirm_appointment_page', id=id)  # Redirect to a success page
 
     else:
-        form = AppointmentForm(shop=shop)
+        form = AppointmentForm(shop=shop, user=request.user.get_account())
 
     appointments = Appointment.objects.filter(shop=shop, date__gte=datetime.now().today()).order_by('date', 'start_time')
     context = {'form': form, 'appointments': appointments}
@@ -69,7 +68,7 @@ def confirm_appointment_page(request, id):
     submitted_data = json.loads(session_data)
 
     if request.method == 'POST':
-        appointment_form = AppointmentForm(shop=shop, data=submitted_data)
+        appointment_form = AppointmentForm(shop=shop, data=submitted_data, user=request.user.get_account())
 
         if appointment_form.is_valid():
             if 'confirm' in request.POST:
@@ -124,6 +123,9 @@ def delete_appointment(request, id):
 @login_required()
 def past_appointments_page(request):
     user = request.user.get_account()
-    appointments = Appointment.objects.filter(user=user, date__lt=datetime.now().today()).order_by('date', 'start_time')
+    now = datetime.now()
+    appointments = Appointment.objects.filter(Q(user=user, date__lt=now.date()) |
+                                              Q(user=user, date=now.date(), end_time__lt=now)
+                                              ).order_by('-date', 'start_time')
     context = {'appointments': appointments}
     return render(request, 'appointments/past_appointments.html', context)

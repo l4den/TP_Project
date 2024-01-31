@@ -8,8 +8,8 @@
   <div class="row row-cols-1 row-cols-md-4 g-4">
       {% for shop in shops %}
             <div class="col">
-              <div class="card">
-                <img src="{{ shop.logo.url }}" class="card-img-top" alt="...">
+              <div class="card h-100">
+                <img src="{{ shop.logo.url }}" class="card-img-top" alt="..." style="height: 250px">
                 <div class="card-body">
                   <h3 class="card-title">{{ shop.name }}</h3>
                     <small>{{ shop.description }}</small>

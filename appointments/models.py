@@ -11,10 +11,11 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 class Appointment(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
-    date = models.DateField(default=date.today(),
+    date = models.DateField(default=timezone.now,
                             help_text='eg. 23-11-2023',
-                            validators=[MinValueValidator(date.today()),
-                                        MaxValueValidator(date.today() + timedelta(days=30))])
+                            validators=[MinValueValidator(timezone.now().date()),
+                                        MaxValueValidator((timezone.now() + timedelta(days=30)).date())
+                                        ])
 
     start_time = models.TimeField(blank=False, default=timezone.now)
     duration = models.TimeField(blank=True, null=True)

@@ -3,6 +3,7 @@
 
 {% block content %}
 
+    <section class="container my-5">
     <div>
     <br>
     {% if appointments %}
@@ -51,19 +52,26 @@
                <div style="text-align: center;">
                     <h3>Hello {{ user.username }}</h3>
                     <br>
-                    <h4>You have no upcomming appointments</h4>
+                    <h4>You have no upcoming appointments</h4>
                </div>
             </div>
         </div>
     {% endif %}
-    <div class="row">
-        <div class="col-lg-12">
-            <div style="text-align: center;">
-                <a class="btn btn-primary" href="{% url 'past_appointments_page' %}">View previous appointments</a>
-                <hr>
+
+
+        <div class="row justify-content-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div style="text-align: center;">
+                        <br>
+                        <a class="btn btn-primary" href="{% url 'past_appointments_page' %}">View previous appointments</a>
+                        <br>
+                        <hr>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    </div>
+    </section>
 
 {% endblock content %}

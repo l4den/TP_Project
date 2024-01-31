@@ -145,3 +145,5 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+DATE_INPUT_FORMATS = ['%d/%m/%Y']

@@ -71,3 +71,24 @@ class Account(AbstractBaseUser):
 
     def get_account(self):
         return self
+
+    def time_in_range(self, time, begin, end):
+        if begin < time < end:
+            return True
+        return False
+
+    def user_is_free(self, date, start, end):
+        appointments = self.appointment_set.filter(date=date)
+
+        for appt in appointments:
+            if (self.time_in_range(start, appt.start_time, appt.end_time) or
+                    self.time_in_range(end, appt.start_time, appt.end_time)):
+                return False
+
+            if start == appt.start_time or end == appt.end_time:
+                return False
+            # ako terminot preklopuva drug termin
+            if start < appt.start_time and appt.end_time < end:
+                return False
+
+        return True
