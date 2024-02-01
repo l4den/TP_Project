@@ -17,8 +17,8 @@
                         {{ appointment.start_time|date:"H:i" }}
                         <small> ?</small>
                     </p>
-                    <a class="btn btn-danger" href="{% url 'delete_appointment' appointment.id %}">Cancel</a>
-                    <a class="btn btn-primary" href="{% url 'myappointments_page' %}">My appointments</a>
+                    <a class="btn btn-danger" href="{% url 'delete_appointment' appointment.id %}">Yes</a>
+                    <a class="btn btn-primary" href="{% url 'myappointments_page' %}">No</a>
                 </div><small></small>
             </div>
         </div>

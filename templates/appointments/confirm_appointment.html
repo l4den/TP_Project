@@ -12,7 +12,7 @@
                         <small>Shop: </small><p>{{ shop.name }}</p>
                         <small>Location: </small><p>{{ shop.location }}</p>
 
-                        <small>Date: </small><p>{{ submitted_data.date }}</p>
+                        <small>Date: </small><p>{{ date_obj|date:"d/m/Y" }}</p>
                         <small>Start time: </small><p>{{ submitted_data.start_time}}</p>
                         <small>End time: </small><p>{{ submitted_data.end_time}}</p>
                         <small>Services: </small><p>{{ names_of_services }}</p>

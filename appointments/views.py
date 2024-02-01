@@ -92,7 +92,9 @@ def confirm_appointment_page(request, id):
             print(f'Form errors:\n{appointment_form.errors}')
 
     servNames = request.session.get('names_of_services')
-    context = {'shop': shop, 'submitted_data': submitted_data, 'names_of_services': servNames}
+    date_str = submitted_data['date']
+    date_object = datetime.strptime(date_str, '%Y-%m-%d')
+    context = {'shop': shop, 'submitted_data': submitted_data, 'names_of_services': servNames, 'date_obj': date_object}
     return render(request, 'appointments/confirm_appointment.html', context)
 
 

@@ -9,3 +9,4 @@ urlpatterns = [
     path('confirm-delete/<int:id>', views.confirm_delete_appointment, name='confirm_delete_appointment_page'),
     path('past-appointments', views.past_appointments_page, name='past_appointments_page'),
 ]
+
