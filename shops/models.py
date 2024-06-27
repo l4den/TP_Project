@@ -7,7 +7,7 @@ class Shop(models.Model):
     description = models.TextField(max_length=250, blank=True, default='')
     location = models.CharField(max_length=150, blank=False, default='')
     location_link = models.CharField(max_length=150, blank=False, default='',
-                                     help_text='Link od Google Maps od vasata adresa')
+                                     help_text='Google Maps link')
     logo = models.ImageField(upload_to='shop_logos', default='default.jpg', blank=True)
     owner = models.ForeignKey(Account, on_delete=models.CASCADE)
 

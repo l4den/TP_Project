@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    'jazzmin',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -147,3 +150,10 @@ MESSAGE_TAGS = {
 }
 
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Reservify Admin',
+    'site_header': 'Reservify',
+    'site_brand': 'Reservify',
+    'site_logo': None,
+}

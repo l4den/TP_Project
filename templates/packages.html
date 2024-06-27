@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+<!-- Navbar -->
+
+{% block content %}
+    <section class="container" style="padding: 5%">
+        <div class="row">
+            <div class="col-lg-4 col-md-12 col-xs-12">
+                <div style="border: #c6c6c6 solid 1px; border-radius: 10px; padding: 5%; margin-top: 20px">
+                    <h3 style="text-align: center">Standard Package</h3>
+                    <hr>
+                    <p>Create and edit 1 Shop</p>
+                    <ul>
+                        <li>Add Shop name</li>
+                        <li>Add Shop description</li>
+                        <li>Add Shop location</li>
+                        <li>Add Shop logo image</li>
+                        <li>Add Shop working times</li>
+                    </ul>
+                    <p>Add 3 services in your shop (name, duration, price )</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <h3 style="text-align: center"><del style="font-weight: normal; color: #b8b8b8">15€</del> 10€</h3>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <button class="btn btn-primary btn-block btn-lg">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-xs-12">
+                <div style="border: #c6c6c6 solid 1px; border-radius: 10px; padding: 5%; margin-top: 20px">
+                    <h3 style="text-align: center">Advanced Package</h3>
+                    <hr>
+                    <p>Create and edit 3 Shops</p>
+                    <ul>
+                        <li>Add Shop name</li>
+                        <li>Add Shop description</li>
+                        <li>Add Shop location</li>
+                        <li>Add Shop logo image</li>
+                        <li>Add Shop working times</li>
+                    </ul>
+                    <p>Add 5 services in each of your shops (name, duration, price )</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <h3 style="text-align: center"><del style="font-weight: normal; color: #b8b8b8">30€</del> 20€</h3>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <button class="btn btn-primary btn-block btn-lg">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-xs-12">
+                <div style="border: #c6c6c6 solid 1px; border-radius: 10px; padding: 5%; margin-top: 20px">
+                    <h3 style="text-align: center">Super Package</h3>
+                    <hr>
+                    <p>Create and edit 10 Shops</p>
+                    <ul>
+                        <li>Add Shop name</li>
+                        <li>Add Shop description</li>
+                        <li>Add Shop location</li>
+                        <li>Add Shop logo image</li>
+                        <li>Add Shop working times</li>
+                    </ul>
+                    <p>Add 10 services in each of your shops (name, duration, price )</p>
+                    <p>Custom colors & fonts for each Shop page</p>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <h3 style="text-align: center"><del style="font-weight: normal; color: #b8b8b8">55€</del> 30€</h3>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6">
+                            <button class="btn btn-primary btn-block btn-lg">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+
+{% endblock content %}

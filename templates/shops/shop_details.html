@@ -19,7 +19,7 @@
                 <small>Address: </small>{{ shop.location }}
             </p>
             <p>
-                📌<a href="{{ shop.location_link }}">{{ shop.location_link }}</a>
+                📌<a href="{{ shop.location_link }}">{{ shop.location_link|truncatechars:64 }}</a>
             </p>
         <hr>
         <!-- Services with Prices -->

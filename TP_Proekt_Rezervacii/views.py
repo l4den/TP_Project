@@ -7,3 +7,7 @@ def home_page(request):
 
 def contact_page(request):
     return render(request, 'contact.html')
+
+
+def packages_page(request):
+    return render(request, 'packages.html')
